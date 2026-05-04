@@ -14,7 +14,6 @@ export default function ProjectDetail() {
   const { user } = useAuth();
   const [project, setProject] = useState(null);
   const [tasks, setTasks] = useState([]);
-  const [users, setUsers] = useState([]);
   const [showTaskForm, setShowTaskForm] = useState(false);
   const [showMemberForm, setShowMemberForm] = useState(false);
   const [taskForm, setTaskForm] = useState(emptyTask);
@@ -25,10 +24,8 @@ export default function ProjectDetail() {
 
   const loadProject = () => api.get(`/projects/${id}`).then(r => setProject(r.data));
   const loadTasks = () => api.get(`/tasks/project/${id}`).then(r => setTasks(r.data));
-  const loadUsers = () => api.get('/users').then(r => setUsers(r.data));
-
   // eslint-disable-next-line react-hooks/exhaustive-deps
-  useEffect(() => { loadProject(); loadTasks(); loadUsers(); }, [id]);
+  useEffect(() => { loadProject(); loadTasks(); }, [id]);
 
   const handleTaskSubmit = async (e) => {
     e.preventDefault(); setError('');
