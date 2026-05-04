@@ -12,6 +12,7 @@ export default function Projects() {
   const { user } = useAuth();
 
   const load = () => api.get('/projects').then(r => setProjects(r.data));
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   useEffect(() => { load(); }, []);
 
   const handleCreate = async (e) => {
