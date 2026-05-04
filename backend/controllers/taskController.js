@@ -41,7 +41,6 @@ exports.updateTask = async (req, res) => {
     if (!project) return res.status(403).json({ message: 'Access denied' });
     // Members can only update status of tasks assigned to them
     if (req.user.role === 'Member' && !task.assignedTo?.equals(req.user._id)) {
-      const allowed = { status: req.body.status };
       if (!task.createdBy.equals(req.user._id) && Object.keys(req.body).some(k => k !== 'status'))
         return res.status(403).json({ message: 'Members can only update task status' });
     }

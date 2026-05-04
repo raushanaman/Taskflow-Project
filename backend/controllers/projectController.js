@@ -1,5 +1,6 @@
 const Project = require('../models/Project');
 const User = require('../models/User');
+const Task = require('../models/Task');
 
 exports.createProject = async (req, res) => {
   try {
@@ -51,6 +52,7 @@ exports.deleteProject = async (req, res) => {
     if (!project) return res.status(404).json({ message: 'Project not found' });
     if (req.user.role !== 'Admin' && !project.owner.equals(req.user._id))
       return res.status(403).json({ message: 'Only Admin or project owner can delete' });
+    await Task.deleteMany({ project: project._id });
     await project.deleteOne();
     res.json({ message: 'Project deleted' });
   } catch (err) {
